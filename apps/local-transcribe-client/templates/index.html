@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>本地视频下载与转录客户端</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local Media Desk</p>
+          <h1>下载 / 转录工作台</h1>
+        </div>
+        <div class="status-pill" id="serverStatus">本地服务已连接</div>
+      </header>
+
+      <section class="workspace">
+        <nav class="tabs" aria-label="功能切换">
+          <button class="tab active" data-tab="downloadPanel" type="button">下载</button>
+          <button class="tab" data-tab="transcribePanel" type="button">转录</button>
+          <button class="tab" data-tab="jobsPanel" type="button">任务</button>
+        </nav>
+
+        <section class="panel active" id="downloadPanel">
+          <form id="downloadForm" class="form-grid">
+            <label class="field wide">
+              <span>YouTube / Bilibili 链接</span>
+              <input name="url" type="url" placeholder="https://www.youtube.com/watch?v=... 或 https://www.bilibili.com/video/..." required />
+            </label>
+
+            <fieldset class="segmented wide">
+              <legend>下载内容</legend>
+              <label><input type="radio" name="mode" value="video" checked />视频源</label>
+              <label><input type="radio" name="mode" value="audio" />音频源</label>
+            </fieldset>
+
+            <label class="field">
+              <span>视频模式</span>
+              <select name="quality">
+                <option value="source">最高质量源文件</option>
+                <option value="compatible">兼容 MP4 单文件</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Cookie 来源</span>
+              <select name="cookie_source">
+                <option value="none">不使用</option>
+                <option value="chrome">Chrome</option>
+                <option value="edge">Edge</option>
+                <option value="firefox">Firefox</option>
+              </select>
+            </label>
+
+            <label class="field wide">
+              <span>cookies.txt 路径</span>
+              <input name="cookie_file" type="text" placeholder="可选：例如 D:\path\bilibili-cookies.txt" />
+            </label>
+
+            <button class="primary" type="submit">开始下载</button>
+            <button class="primary one-click" id="oneClickTranscribe" type="button">一键下载并转录</button>
+          </form>
+        </section>
+
+        <section class="panel" id="transcribePanel">
+          <form id="transcribeForm" class="form-grid" enctype="multipart/form-data">
+            <label class="field wide">
+              <span>上传本地音视频</span>
+              <input name="file" type="file" accept="audio/*,video/*,.mp3,.mp4,.m4a,.wav,.webm,.mkv,.flv" />
+            </label>
+
+            <label class="field wide">
+              <span>或填入服务器本地文件路径</span>
+              <input name="path" type="text" placeholder="下载完成后可从任务结果自动带入" />
+            </label>
+
+            <label class="field">
+              <span>模型</span>
+              <select name="model">
+                <option value="small">small</option>
+                <option value="tiny">tiny</option>
+                <option value="base">base</option>
+                <option value="medium">medium</option>
+                <option value="large-v3">large-v3</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>语言</span>
+              <input name="language" type="text" placeholder="自动 / zh / en / ja" />
+            </label>
+
+            <label class="field">
+              <span>设备</span>
+              <select name="device">
+                <option value="cpu">cpu</option>
+                <option value="auto">auto</option>
+                <option value="cuda">cuda</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>计算类型</span>
+              <select name="compute_type">
+                <option value="int8">int8</option>
+                <option value="default">default</option>
+                <option value="float16">float16</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Beam size</span>
+              <input name="beam_size" type="number" min="1" max="10" value="5" />
+            </label>
+
+            <label class="check">
+              <input name="timestamps" type="checkbox" />
+              <span>输出时间戳</span>
+            </label>
+
+            <label class="check">
+              <input name="no_vad" type="checkbox" />
+              <span>关闭 VAD</span>
+            </label>
+
+            <button class="primary" type="submit">开始转录</button>
+          </form>
+        </section>
+
+        <section class="panel" id="jobsPanel">
+          <div class="jobs-header">
+            <h2>任务队列</h2>
+            <button class="secondary" id="refreshJobs" type="button">刷新</button>
+          </div>
+          <div class="jobs" id="jobs"></div>
+        </section>
+      </section>
+    </main>
+
+    <template id="jobTemplate">
+      <article class="job">
+        <div class="job-main">
+          <div>
+            <p class="job-kind"></p>
+            <h3></h3>
+          </div>
+          <strong class="job-status"></strong>
+        </div>
+        <div class="progress"><span></span></div>
+        <p class="job-message"></p>
+        <div class="job-files"></div>
+        <details>
+          <summary>日志</summary>
+          <pre></pre>
+        </details>
+      </article>
+    </template>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

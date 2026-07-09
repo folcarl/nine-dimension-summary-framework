@@ -2,9 +2,11 @@
 
 The default workflow expects user-provided text, transcripts, or document content.
 
-## Media-Derived Text
+## Media And URLs
 
-The default workflow expects text, transcripts, or document content. If a source began as audio or video, users are responsible for preparing a lawful transcript before applying the framework.
+URL handling is optional and is only a convenience path for content the user has rights to process. The project should not be described as a media acquisition or downloader product.
+
+Users are responsible for complying with copyright law, platform terms, privacy obligations, and local rules.
 
 ## Do Not Commit
 

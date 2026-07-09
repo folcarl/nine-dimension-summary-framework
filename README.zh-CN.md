@@ -6,7 +6,7 @@
 
 这个项目的核心不是 Codex 专用 skill，也不是下载或转录工具，而是一套可复用的总结框架：好的总结不是压缩字数，而是重建意义、证据、边界、形式、观看位置和现实判断。
 
-本仓库包含通用方法论文件，也包含一个可选的 Codex 兼容适配器。
+本仓库包含通用方法论文件，也包含可选的 agent 适配器和本地转录辅助工具。
 
 ## 这是什么
 
@@ -92,15 +92,23 @@ Read framework/standard.en.md, choose full or lightweight mode with framework/ma
 
 ## 可选 Agent 适配器
 
-`skills/` 目录里是 Codex 兼容的 skill 包。它只是适配器，不是项目本体：
+`skills/` 目录里是 Codex 兼容的 skill 包。它们只是适配器，不是项目本体：
 
 - `skills/nine-dimension-summary`：九维框架的 Codex 兼容适配器。
+- `skills/transcribe-video`：面向用户授权音视频内容的本地转录适配器。
+- `skills/transcribe-and-summarize`：从授权媒体到转录稿再到九维总结的组合 workflow。
 
 其他 agent 系统可以直接复用 `framework/` 里的文件，不需要使用 Codex skill 格式。
 
+## 可选本地转录
+
+`apps/local-transcribe-client` 是辅助工具，用于在用户有权处理音视频时生成转录稿。
+
+如果你已经有文本或转录稿，直接使用 `framework/`，不需要走转录流程。
+
 ## 合规与用户责任
 
-默认工作流面向用户已经提供的文本、转录稿或文档内容。
+默认工作流面向用户已经提供的文本、转录稿或文档内容。URL 处理只作为用户有权处理内容时的本地辅助路径。
 
 不要提交：
 
@@ -119,6 +127,7 @@ Read framework/standard.en.md, choose full or lightweight mode with framework/ma
 ```text
 framework/                  # 通用方法论文件
 skills/                     # 可选 Codex 兼容适配器
+apps/local-transcribe-client/
 docs/
 examples/
 ```

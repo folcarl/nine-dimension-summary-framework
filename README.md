@@ -6,7 +6,7 @@ Nine-Dimension Summary Framework is a general-purpose methodology for turning de
 
 The core idea: summaries are not compression. They are reconstruction of meaning, evidence, limits, form, audience position, and practical judgment.
 
-This repository includes the framework itself plus an optional Codex-compatible adapter. It is not tied to Codex, and it should not be positioned as a media downloader.
+This repository includes the framework itself plus optional adapters for agent workflows and local transcription. It is not tied to Codex, and it should not be positioned as a media downloader.
 
 ## What This Is
 
@@ -92,15 +92,23 @@ See `docs/quickstart.md` for examples.
 
 ## Optional Agent Adapters
 
-`skills/` contains a Codex-compatible skill package. It is an adapter, not the core product:
+`skills/` contains Codex-compatible skill packages. They are adapters, not the core product:
 
 - `skills/nine-dimension-summary`: Codex-compatible adapter for the framework.
+- `skills/transcribe-video`: optional local transcription adapter for user-authorized media.
+- `skills/transcribe-and-summarize`: optional workflow from authorized media to transcript to summary.
 
 Other agent systems can reuse the files under `framework/` directly.
 
+## Optional Local Transcription
+
+`apps/local-transcribe-client` is a secondary local helper for users who need to create transcripts from authorized media before applying the framework.
+
+Use it only for content you have rights to process. If you already have text or a transcript, skip transcription and use the framework directly.
+
 ## Compliance And User Responsibility
 
-The default workflow expects user-provided text, transcripts, or document content. Do not commit cookies, downloaded media, private transcripts, logs, or generated job state.
+The default workflow expects user-provided text, transcripts, or document content. URL handling is provided only as a convenience path for content the user has rights to process. Do not commit cookies, downloaded media, private transcripts, logs, or generated job state.
 
 For investment or economic material, outputs are judgment support, not investment advice.
 
@@ -109,6 +117,7 @@ For investment or economic material, outputs are judgment support, not investmen
 ```text
 framework/                  # Generic methodology files
 skills/                     # Optional Codex-compatible adapters
+apps/local-transcribe-client/
 docs/
 examples/
 ```
