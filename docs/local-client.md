@@ -21,4 +21,4 @@ http://127.0.0.1:7860
 - Keep the service bound to localhost.
 - Do not commit generated downloads, uploads, transcripts, logs, or job state.
 - Use only content you are authorized to process.
-- If you already have a transcript, use the main summary skill directly.
+- If you already have a transcript, use the framework directly.

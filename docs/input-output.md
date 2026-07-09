@@ -2,7 +2,7 @@
 
 ## Supported Inputs
 
-The main skill supports:
+The framework supports:
 
 - direct text;
 - transcript files;
@@ -14,7 +14,7 @@ The main skill supports:
 - reports;
 - user-provided video-derived text.
 
-The default path does not require a media URL.
+The default path does not require a media URL or a Codex skill runtime.
 
 ## Full Mode Output
 

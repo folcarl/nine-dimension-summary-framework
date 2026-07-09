@@ -5,7 +5,7 @@ description: Produce structured, critical, high-signal summaries from text, tran
 
 # Nine-Dimension Summary
 
-Use this skill to turn source material into a clear Markdown summary that restores the material first, then analyzes its deeper problem, form, evidence, limits, implications, and quality.
+Use this Codex-compatible adapter to apply the generic framework in `../../framework/` to source material. It turns source material into a clear Markdown summary that restores the material first, then analyzes its deeper problem, form, evidence, limits, implications, and quality.
 
 ## Workflow
 

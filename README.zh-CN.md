@@ -2,13 +2,17 @@
 
 [English README](README.md)
 
-九维总结方法论框架是一个可复用的 Codex skill / framework，用来把高密度材料转化为结构清晰、带有批判意识、可用于判断的高质量总结。它适用于文本、转录稿、文章、访谈、讲座、研报、播客，以及用户已经提取好的视频内容文本。
+九维总结方法论框架是一套通用方法论，用来把高密度材料转化为结构清晰、带有批判意识、可用于判断的高质量总结。它适用于文本、转录稿、文章、访谈、讲座、研报、播客，以及用户已经提取好的视频内容文本。
 
-这个项目的核心不是下载或转录工具，而是一套总结方法论：好的总结不是压缩字数，而是重建意义、证据、边界、形式、观看位置和现实判断。
+这个项目的核心不是 Codex 专用 skill，也不是下载或转录工具，而是一套可复用的总结框架：好的总结不是压缩字数，而是重建意义、证据、边界、形式、观看位置和现实判断。
+
+本仓库包含通用方法论文件，也包含可选的 agent 适配器和本地转录辅助工具。
 
 ## 这是什么
 
-主产品是 `skills/nine-dimension-summary`，一个支持中文和英文的九维总结 skill。它帮助 agent：
+主产品是 `framework/` 里的通用九维总结框架。它可以被人直接使用，也可以被 AI agent、写作流程、研究流程或自定义应用调用。
+
+它帮助总结者：
 
 - 先还原原材料真正说了什么，再进行评价；
 - 找出表层主题背后真正处理的问题；
@@ -16,6 +20,25 @@
 - 区分原文观点、合理推论和仍需外部核验的内容；
 - 批判证据缺口、逻辑风险、不同立场和框架局限；
 - 输出带评分的 Markdown 总结。
+
+## 核心框架文件
+
+```text
+framework/
+  standard.zh.md
+  standard.en.md
+  material-routing.md
+  output-contract.md
+  scoring-rubric.md
+  completion-checklist.md
+```
+
+- `standard.zh.md`：中文版方法论标准。
+- `standard.en.md`：英文版方法论标准。
+- `material-routing.md`：材料类型路由和完整版/轻量版选择。
+- `output-contract.md`：Markdown 输出结构。
+- `scoring-rubric.md`：10 分制评分规则。
+- `completion-checklist.md`：完成前质量检查清单。
 
 ## 能产出什么
 
@@ -45,51 +68,43 @@
 - 用户自行提供的视频内容文本；
 - 中文或英文总结任务。
 
-默认路径是：**用户提供文本或转录稿 → 使用九维方法论总结 → 输出 Markdown 文档**。
+默认路径是：
+
+```text
+文本或转录稿 -> 九维总结框架 -> Markdown 总结
+```
 
 ## 快速开始
 
-安装或复制主 skill：
+中文输出可以这样使用：
 
 ```text
-skills/nine-dimension-summary
+阅读 framework/standard.zh.md，用 framework/material-routing.md 判断完整版或轻量版，然后按照 framework/output-contract.md 和 framework/completion-checklist.md 总结材料。
 ```
 
-然后可以这样调用：
+英文输出可以这样使用：
 
 ```text
-Use $nine-dimension-summary to summarize this transcript in Chinese.
-```
-
-或者：
-
-```text
-Use $nine-dimension-summary to produce an English full-mode summary of this article.
+Read framework/standard.en.md, choose full or lightweight mode with framework/material-routing.md, then summarize the source according to framework/output-contract.md and framework/completion-checklist.md.
 ```
 
 更多示例见 `docs/quickstart.md`。
 
-## 主 Skill
+## 可选 Agent 适配器
 
-`nine-dimension-summary` 是这个仓库的主 skill。它默认支持直接文本和转录稿输入，不需要视频链接，也不依赖下载流程。
+`skills/` 目录里是 Codex 兼容的 skill 包。它们只是适配器，不是项目本体：
 
-方法论细节放在：
-
-```text
-skills/nine-dimension-summary/references/
-```
-
-其中包括中文版标准、英文版标准、材料类型路由、输出契约、评分规则和完成前检查清单。
-
-## 可选适配器
-
-仓库中也包含几个可选辅助模块：
-
+- `skills/nine-dimension-summary`：九维框架的 Codex 兼容适配器。
 - `skills/transcribe-video`：面向用户授权音视频内容的本地转录适配器。
 - `skills/transcribe-and-summarize`：从授权媒体到转录稿再到九维总结的组合 workflow。
-- `apps/local-transcribe-client`：用于本地转录流程的网页客户端。
 
-这些都是辅助能力，不是项目主卖点。本项目不应被宣传为媒体下载器或内容获取工具。
+其他 agent 系统可以直接复用 `framework/` 里的文件，不需要使用 Codex skill 格式。
+
+## 可选本地转录
+
+`apps/local-transcribe-client` 是辅助工具，用于在用户有权处理音视频时生成转录稿。
+
+如果你已经有文本或转录稿，直接使用 `framework/`，不需要走转录流程。
 
 ## 合规与用户责任
 
@@ -110,12 +125,9 @@ skills/nine-dimension-summary/references/
 ## 仓库结构
 
 ```text
-skills/
-  nine-dimension-summary/
-  transcribe-video/
-  transcribe-and-summarize/
-apps/
-  local-transcribe-client/
+framework/                  # 通用方法论文件
+skills/                     # 可选 Codex 兼容适配器
+apps/local-transcribe-client/
 docs/
 examples/
 ```

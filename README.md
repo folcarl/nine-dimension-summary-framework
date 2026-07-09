@@ -2,13 +2,17 @@
 
 [中文说明](README.zh-CN.md)
 
-Nine-Dimension Summary Framework is a reusable Codex skill for turning dense source material into structured, critical, high-signal summaries. It works with text, transcripts, articles, interviews, lectures, reports, podcasts, and user-provided video-derived content.
+Nine-Dimension Summary Framework is a general-purpose methodology for turning dense source material into structured, critical, high-signal summaries. It works with text, transcripts, articles, interviews, lectures, reports, podcasts, and user-provided video-derived content.
 
-The project is centered on a methodology: summaries are not compression. They are reconstruction of meaning, evidence, limits, form, audience position, and practical judgment.
+The core idea: summaries are not compression. They are reconstruction of meaning, evidence, limits, form, audience position, and practical judgment.
+
+This repository includes the framework itself plus optional adapters for agent workflows and local transcription. It is not tied to Codex, and it should not be positioned as a media downloader.
 
 ## What This Is
 
-The main product is `skills/nine-dimension-summary`, a bilingual summary framework for Chinese and English work. It helps an agent:
+The main product is the reusable framework in `framework/`. It can be used by humans, AI agents, writing workflows, research pipelines, or custom applications.
+
+It helps a summarizer:
 
 - restore what the source actually says before evaluating it;
 - identify the deeper problem beneath the surface topic;
@@ -16,6 +20,25 @@ The main product is `skills/nine-dimension-summary`, a bilingual summary framewo
 - separate source claims, inference, and externally unverified claims;
 - critique evidence gaps, logic risks, and alternative positions;
 - produce a scored Markdown summary.
+
+## Core Framework Files
+
+```text
+framework/
+  standard.zh.md
+  standard.en.md
+  material-routing.md
+  output-contract.md
+  scoring-rubric.md
+  completion-checklist.md
+```
+
+- `standard.zh.md`: canonical Chinese methodology.
+- `standard.en.md`: natural English methodology.
+- `material-routing.md`: full vs lightweight mode selection.
+- `output-contract.md`: expected Markdown output shapes.
+- `scoring-rubric.md`: 10-point scoring rules.
+- `completion-checklist.md`: pre-final quality gate.
 
 ## What It Produces
 
@@ -45,41 +68,43 @@ Use the framework for:
 - user-provided extracted video content;
 - Chinese or English summaries.
 
+The default path is:
+
+```text
+text or transcript -> nine-dimension framework -> Markdown summary
+```
+
 ## Quick Start
 
-Install or copy the main skill:
+For Chinese output, start with:
 
 ```text
-skills/nine-dimension-summary
+Read framework/standard.zh.md, choose full or lightweight mode with framework/material-routing.md, then summarize the source according to framework/output-contract.md and framework/completion-checklist.md.
 ```
 
-Then ask:
+For English output, start with:
 
 ```text
-Use $nine-dimension-summary to summarize this transcript in Chinese.
+Read framework/standard.en.md, choose full or lightweight mode with framework/material-routing.md, then summarize the source according to framework/output-contract.md and framework/completion-checklist.md.
 ```
 
-or:
+See `docs/quickstart.md` for examples.
 
-```text
-Use $nine-dimension-summary to produce an English full-mode summary of this article.
-```
+## Optional Agent Adapters
 
-See `docs/quickstart.md` for more examples.
+`skills/` contains Codex-compatible skill packages. They are adapters, not the core product:
 
-## Main Skill
+- `skills/nine-dimension-summary`: Codex-compatible adapter for the framework.
+- `skills/transcribe-video`: optional local transcription adapter for user-authorized media.
+- `skills/transcribe-and-summarize`: optional workflow from authorized media to transcript to summary.
 
-`nine-dimension-summary` is the primary skill. It supports direct text and transcript inputs by default. It does not require media URLs.
+Other agent systems can reuse the files under `framework/` directly.
 
-## Optional Adapters
+## Optional Local Transcription
 
-The repository includes optional local adapters:
+`apps/local-transcribe-client` is a secondary local helper for users who need to create transcripts from authorized media before applying the framework.
 
-- `skills/transcribe-video`: local transcription for user-authorized audio or video content.
-- `skills/transcribe-and-summarize`: convenience workflow from authorized media to transcript to summary.
-- `apps/local-transcribe-client`: a local web client for transcription workflows.
-
-These adapters are secondary. The framework is not positioned as a media acquisition tool.
+Use it only for content you have rights to process. If you already have text or a transcript, skip transcription and use the framework directly.
 
 ## Compliance And User Responsibility
 
@@ -90,12 +115,9 @@ For investment or economic material, outputs are judgment support, not investmen
 ## Repository Layout
 
 ```text
-skills/
-  nine-dimension-summary/
-  transcribe-video/
-  transcribe-and-summarize/
-apps/
-  local-transcribe-client/
+framework/                  # Generic methodology files
+skills/                     # Optional Codex-compatible adapters
+apps/local-transcribe-client/
 docs/
 examples/
 ```
