@@ -1,27 +1,130 @@
 # Nine-Dimension Summary Framework
 
+Most summaries are too small for the material they summarize.
+
+They compress the surface, keep a few arguments, and miss the harder parts: what problem the source is really dealing with, how it tries to persuade, where the evidence is thin, what the audience may misunderstand, and what judgment the reader can actually make afterward.
+
+The Nine-Dimension Summary Framework is a reusable method for producing structured, critical, high-signal summaries from dense material.
+
 [中文说明](README.zh-CN.md)
 
-Nine-Dimension Summary Framework is a general-purpose methodology for turning dense source material into structured, critical, high-signal summaries. It works with text, transcripts, articles, interviews, lectures, reports, podcasts, and user-provided video-derived content.
+## What this is
 
-The core idea: summaries are not compression. They are reconstruction of meaning, evidence, limits, form, audience position, and practical judgment.
+This repository is mainly a methodology.
 
-This repository includes the framework itself plus optional adapters for agent workflows and local transcription. It is not tied to Codex, and it should not be positioned as a media downloader.
+Use it for:
 
-## What This Is
+- articles;
+- transcripts;
+- interviews;
+- lectures;
+- reports;
+- podcasts;
+- research notes;
+- user-provided video-derived text.
 
-The main product is the reusable framework in `framework/`. It can be used by humans, AI agents, writing workflows, research pipelines, or custom applications.
+The default output is Markdown. The framework works in Chinese or English.
 
-It helps a summarizer:
+It is not a media downloader. It is not only a Codex skill. Codex adapters and local transcription helpers are included, but the core product is the framework under `framework/`.
 
-- restore what the source actually says before evaluating it;
-- identify the deeper problem beneath the surface topic;
-- analyze form, audience, viewing logic, and possible misreadings;
-- separate source claims, inference, and externally unverified claims;
-- critique evidence gaps, logic risks, and alternative positions;
-- produce a scored Markdown summary.
+## Quick start: give this to an agent
 
-## Core Framework Files
+If your agent can read GitHub links, send it this:
+
+```text
+Read https://github.com/folcarl/nine-dimension-summary-framework.
+Use the Nine-Dimension Summary Framework to summarize the material I provide.
+
+First read the right standard:
+- framework/standard.en.md for English output
+- framework/standard.zh.md for Chinese output
+
+Then use:
+- framework/material-routing.md to choose full or lightweight mode
+- framework/output-contract.md for the Markdown structure
+- framework/scoring-rubric.md for scoring
+- framework/completion-checklist.md before final output
+
+Do not summarize by compression only. Reconstruct the source's meaning, evidence, limits, form, audience position, and practical judgment.
+```
+
+Then paste your source text or transcript.
+
+## Quick start: use the framework directly
+
+For English output:
+
+```text
+Read framework/standard.en.md.
+Use framework/material-routing.md to choose full or lightweight mode.
+Summarize the source according to framework/output-contract.md.
+Score the result with framework/scoring-rubric.md.
+Check the result with framework/completion-checklist.md.
+```
+
+For Chinese output:
+
+```text
+Read framework/standard.zh.md.
+Use framework/material-routing.md to choose full or lightweight mode.
+Summarize the source according to framework/output-contract.md.
+Score the result with framework/scoring-rubric.md.
+Check the result with framework/completion-checklist.md.
+```
+
+## Codex skill installation
+
+This repo contains optional Codex-compatible skills under `skills/`.
+
+To install the main summary skill:
+
+```bash
+mkdir -p ~/.codex/skills
+git clone https://github.com/folcarl/nine-dimension-summary-framework /tmp/nine-dimension-summary-framework
+cp -R /tmp/nine-dimension-summary-framework/skills/nine-dimension-summary ~/.codex/skills/nine-dimension-summary
+```
+
+Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force $env:USERPROFILE\.codex\skills | Out-Null
+git clone https://github.com/folcarl/nine-dimension-summary-framework $env:TEMP\nine-dimension-summary-framework
+Copy-Item -Recurse $env:TEMP\nine-dimension-summary-framework\skills\nine-dimension-summary $env:USERPROFILE\.codex\skills\nine-dimension-summary
+```
+
+Then ask Codex:
+
+```text
+Use $nine-dimension-summary to summarize this transcript in Chinese:
+
+[paste transcript]
+```
+
+Optional skills:
+
+- `skills/nine-dimension-summary`: the main Codex adapter
+- `skills/transcribe-video`: local transcription for media you are allowed to process
+- `skills/transcribe-and-summarize`: local transcription followed by the framework
+
+If you already have text or a transcript, skip transcription.
+
+## What the framework checks
+
+Full mode usually covers:
+
+- core content and argument;
+- the real problem the source is handling;
+- form, audience, and viewing logic;
+- evidence chain and reasoning;
+- critique and limits;
+- external verification boundary;
+- implications for judgment and action;
+- follow-up observation list;
+- overall evaluation and scores.
+
+Lightweight mode keeps the essential checks for short or low-density material.
+
+## Repository layout
 
 ```text
 framework/
@@ -31,95 +134,30 @@ framework/
   output-contract.md
   scoring-rubric.md
   completion-checklist.md
-```
 
-- `standard.zh.md`: canonical Chinese methodology.
-- `standard.en.md`: natural English methodology.
-- `material-routing.md`: full vs lightweight mode selection.
-- `output-contract.md`: expected Markdown output shapes.
-- `scoring-rubric.md`: 10-point scoring rules.
-- `completion-checklist.md`: pre-final quality gate.
+skills/
+  nine-dimension-summary/
+  transcribe-video/
+  transcribe-and-summarize/
 
-## What It Produces
-
-Default output is Markdown. Full mode usually includes:
-
-- Core Content / Core Argument
-- The Real Problem It Handles
-- Form And Viewing Logic
-- Evidence Chain And Reasoning
-- Critique And Limits
-- External Verification Boundary
-- Implications For Judgment And Action
-- Follow-Up Observation List
-- Overall Evaluation And Scores
-
-Lightweight mode compresses the structure for short, low-density material while preserving the essential checks.
-
-## When To Use It
-
-Use the framework for:
-
-- pasted source text;
-- transcript files;
-- article drafts;
-- interviews, lectures, podcasts, and speeches;
-- research notes and reports;
-- user-provided extracted video content;
-- Chinese or English summaries.
-
-The default path is:
-
-```text
-text or transcript -> nine-dimension framework -> Markdown summary
-```
-
-## Quick Start
-
-For Chinese output, start with:
-
-```text
-Read framework/standard.zh.md, choose full or lightweight mode with framework/material-routing.md, then summarize the source according to framework/output-contract.md and framework/completion-checklist.md.
-```
-
-For English output, start with:
-
-```text
-Read framework/standard.en.md, choose full or lightweight mode with framework/material-routing.md, then summarize the source according to framework/output-contract.md and framework/completion-checklist.md.
-```
-
-See `docs/quickstart.md` for examples.
-
-## Optional Agent Adapters
-
-`skills/` contains Codex-compatible skill packages. They are adapters, not the core product:
-
-- `skills/nine-dimension-summary`: Codex-compatible adapter for the framework.
-- `skills/transcribe-video`: optional local transcription adapter for user-authorized media.
-- `skills/transcribe-and-summarize`: optional workflow from authorized media to transcript to summary.
-
-Other agent systems can reuse the files under `framework/` directly.
-
-## Optional Local Transcription
-
-`apps/local-transcribe-client` is a secondary local helper for users who need to create transcripts from authorized media before applying the framework.
-
-Use it only for content you have rights to process. If you already have text or a transcript, skip transcription and use the framework directly.
-
-## Compliance And User Responsibility
-
-The default workflow expects user-provided text, transcripts, or document content. URL handling is provided only as a convenience path for content the user has rights to process. Do not commit cookies, downloaded media, private transcripts, logs, or generated job state.
-
-For investment or economic material, outputs are judgment support, not investment advice.
-
-## Repository Layout
-
-```text
-framework/                  # Generic methodology files
-skills/                     # Optional Codex-compatible adapters
-apps/local-transcribe-client/
 docs/
 examples/
+apps/local-transcribe-client/
 ```
 
-Start with `docs/methodology.md` to understand the framework and `docs/input-output.md` to understand the expected output shape.
+## Good first files
+
+Start here:
+
+- [docs/quickstart.md](docs/quickstart.md)
+- [docs/methodology.md](docs/methodology.md)
+- [docs/input-output.md](docs/input-output.md)
+- [examples/](examples/)
+
+## Compliance note
+
+The default workflow starts from text or transcripts you provide. Only use local transcription for media you have the right to process.
+
+Do not commit cookies, downloaded media, private transcripts, logs, generated job state, or credentials.
+
+For investment, economic, or market material, the output is research support, not investment advice.
