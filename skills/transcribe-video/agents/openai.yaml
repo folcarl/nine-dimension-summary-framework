@@ -1,4 +1,0 @@
-interface:
-  display_name: "Transcribe Video"
-  short_description: "Optional local transcription adapter for authorized media."
-  default_prompt: "Use $transcribe-video to transcribe this authorized local media file."

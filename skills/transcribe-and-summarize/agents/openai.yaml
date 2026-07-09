@@ -1,4 +1,0 @@
-interface:
-  display_name: "Transcribe And Summarize"
-  short_description: "Optional workflow from media to summary."
-  default_prompt: "Use $transcribe-and-summarize to create a Markdown summary from this authorized media or transcript."

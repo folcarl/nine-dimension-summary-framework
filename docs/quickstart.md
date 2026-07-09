@@ -46,4 +46,4 @@ The adapter is optional; the canonical framework lives in `framework/`.
 
 The framework returns Markdown. For dense material it defaults to full mode. For short, low-density material it can use lightweight mode.
 
-Media transcription is optional. If you already have text, do not use the transcription adapter.
+If your source began as audio or video, prepare a lawful transcript first, then apply the framework to the transcript.
