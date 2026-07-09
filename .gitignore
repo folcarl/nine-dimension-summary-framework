@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.venv-*/
+venv/
+
+# Runtime data
+downloads/
+uploads/
+.uploads/
+logs/
+server_logs/
+job_state/
+transcripts/
+*.log
+server.out.log
+server.err.log
+
+# Media and generated artifacts
+*.mp3
+*.mp4
+*.m4a
+*.wav
+*.webm
+*.mkv
+*.flv
+*.aac
+*.ogg
+*.srt
+*.vtt
+
+# Secrets and auth
+cookies.txt
+*cookies*.txt
+.env
+.env.*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

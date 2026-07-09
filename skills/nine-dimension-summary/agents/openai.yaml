@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nine-Dimension Summary"
+  short_description: "Structured critical summaries for dense source material."
+  default_prompt: "Use $nine-dimension-summary to produce a structured critical summary from this source text."
